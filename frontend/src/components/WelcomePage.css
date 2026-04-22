@@ -1,0 +1,67 @@
+.welcome-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.welcome-card {
+  background: white;
+  padding: 50px;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 500px;
+  animation: slideIn 0.5s ease-out;
+}
+
+.welcome-icon {
+  font-size: 64px;
+  margin-bottom: 20px;
+}
+
+.welcome-card h1 {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.welcome-card p {
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.user-info {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  margin: 20px 0;
+  text-align: left;
+}
+
+.user-info h3 {
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.info-item {
+  margin-bottom: 10px;
+  color: #555;
+}
+
+.info-item strong {
+  display: inline-block;
+  width: 80px;
+  color: #333;
+}
+
+.logout-button {
+  background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+  margin-top: 20px;
+  width: auto;
+  padding: 12px 30px;
+}
+
+.logout-button:hover {
+  transform: translateY(-2px);
+}
