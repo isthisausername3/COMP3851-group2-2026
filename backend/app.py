@@ -4,11 +4,35 @@ import re
 import json
 import os
 from datetime import datetime
+from urllib.parse import urlparse
+
+def load_env_file():
+    """Load key=value pairs from backend/.env into environment variables."""
+    env_path = os.path.join(os.path.dirname(__file__), '.env')
+    if not os.path.exists(env_path):
+        return
+
+    with open(env_path, 'r') as env_file:
+        for line in env_file:
+            line = line.strip()
+            if not line or line.startswith('#') or '=' not in line:
+                continue
+            key, value = line.split('=', 1)
+            os.environ.setdefault(key.strip(), value.strip())
+
+load_env_file()
+
+FRONTEND_URL = os.getenv('FRONTEND_URL', 'http://localhost:3000')
+BACKEND_URL = os.getenv('BACKEND_URL', 'http://localhost:5000')
+
+parsed_backend_url = urlparse(BACKEND_URL)
+BACKEND_HOST = parsed_backend_url.hostname or '127.0.0.1'
+BACKEND_PORT = parsed_backend_url.port or 5000
 
 app = Flask(__name__)
 # Secret key for sessions (change this to a random string in production)
 app.secret_key = 'your-secret-key-here-change-this-12345'
-CORS(app, supports_credentials=True)  # Allow sessions
+CORS(app, supports_credentials=True, origins=[FRONTEND_URL])  # Allow frontend origin
 
 # File to store users
 DATA_FILE = 'users.json'
@@ -170,7 +194,8 @@ def get_users():
 if __name__ == '__main__':
     print("=" * 50)
     print("🐍 Python Backend Server Starting...")
-    print("📍 Running at: http://localhost:5000")
+    print(f"📍 Running at: {BACKEND_URL}")
+    print(f"🌐 Frontend origin: {FRONTEND_URL}")
     print("📝 Endpoints:")
     print("   POST /api/register - Register new user")
     print("   POST /api/login - Login user")
@@ -178,4 +203,4 @@ if __name__ == '__main__':
     print("   GET  /api/check-auth - Check login status")
     print("   GET  /api/users - View all users")
     print("=" * 50)
-    app.run(debug=True, port=5000)
+    app.run(debug=True, host=BACKEND_HOST, port=BACKEND_PORT)

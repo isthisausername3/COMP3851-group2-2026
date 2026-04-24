@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './RegistrationForm.css';
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
+
 const RegistrationForm = ({ onRegisterSuccess }) => {
   // Form data state
   const [formData, setFormData] = useState({
@@ -44,7 +46,7 @@ const RegistrationForm = ({ onRegisterSuccess }) => {
 
     try {
       // Send data to Python backend
-      const response = await axios.post('http://localhost:5000/api/register', formData);
+      const response = await axios.post(`${API_BASE_URL}/api/register`, formData);
       
       if (response.data.success) {
         setMessage({ text: response.data.message, type: 'success' });
@@ -73,7 +75,7 @@ const RegistrationForm = ({ onRegisterSuccess }) => {
           setMessage({ text: error.response.data.message || 'Registration failed', type: 'error' });
         }
       } else {
-        setMessage({ text: 'Cannot connect to server. Make sure backend is running on port 5000', type: 'error' });
+        setMessage({ text: 'Cannot connect to server. Please check your API configuration and backend status.', type: 'error' });
       }
     } finally {
       setIsLoading(false);

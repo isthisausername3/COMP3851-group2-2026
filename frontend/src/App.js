@@ -5,6 +5,8 @@ import LoginForm from './components/LoginForm';
 import WelcomePage from './components/WelcomePage';
 import './App.css';
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
+
 function App() {
   const [currentPage, setCurrentPage] = useState('login'); // 'login', 'register', 'welcome'
   const [currentUser, setCurrentUser] = useState(null);
@@ -16,7 +18,7 @@ function App() {
 
   const checkAuthStatus = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/check-auth', {
+      const response = await axios.get(`${API_BASE_URL}/api/check-auth`, {
         withCredentials: true
       });
       if (response.data.authenticated) {
@@ -35,7 +37,7 @@ function App() {
 
   const handleLogout = async () => {
     try {
-      await axios.post('http://localhost:5000/api/logout', {}, {
+      await axios.post(`${API_BASE_URL}/api/logout`, {}, {
         withCredentials: true
       });
       setCurrentUser(null);

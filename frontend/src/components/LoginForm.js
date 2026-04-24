@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './LoginForm.css';
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
+
 const LoginForm = ({ onLoginSuccess }) => {
   const [formData, setFormData] = useState({
     email: '',
@@ -31,7 +33,7 @@ const LoginForm = ({ onLoginSuccess }) => {
     setMessage({ text: '', type: '' });
 
     try {
-      const response = await axios.post('http://localhost:5000/api/login', formData, {
+      const response = await axios.post(`${API_BASE_URL}/api/login`, formData, {
         withCredentials: true
       });
       
