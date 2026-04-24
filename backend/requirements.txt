@@ -1,0 +1,3 @@
+# Requirements for the backend application
+Flask==2.0.1
+Flask_cors==3.0.10
