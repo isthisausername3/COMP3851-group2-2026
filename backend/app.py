@@ -12,6 +12,7 @@ CORS(app, supports_credentials=True)  # Allow sessions
 
 # File to store users
 DATA_FILE = 'users.json'
+API_URL = 'http://localhost:5000/api'
 
 def load_users():
     """Load users from JSON file"""
@@ -170,7 +171,7 @@ def get_users():
 if __name__ == '__main__':
     print("=" * 50)
     print("🐍 Python Backend Server Starting...")
-    print("📍 Running at: http://localhost:5000")
+    print("📍 Running at: " + API_URL)
     print("📝 Endpoints:")
     print("   POST /api/register - Register new user")
     print("   POST /api/login - Login user")
