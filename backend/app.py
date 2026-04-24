@@ -12,7 +12,7 @@ def load_env_file():
     if not os.path.exists(env_path):
         return
 
-    with open(env_path, 'r') as env_file:
+    with open(env_path, 'r', encoding='utf-8') as env_file:
         for line in env_file:
             line = line.strip()
             if not line or line.startswith('#') or '=' not in line:
@@ -27,7 +27,8 @@ BACKEND_URL = os.getenv('BACKEND_URL', 'http://localhost:5000')
 
 parsed_backend_url = urlparse(BACKEND_URL)
 BACKEND_HOST = parsed_backend_url.hostname or '127.0.0.1'
-BACKEND_PORT = parsed_backend_url.port or 5000
+BACKEND_PORT = parsed_backend_url.port if parsed_backend_url.port is not None else 5000
+FLASK_DEBUG = os.getenv('FLASK_DEBUG', 'false').strip().lower() in ('1', 'true', 'yes', 'on')
 
 app = Flask(__name__)
 # Secret key for sessions (change this to a random string in production)
@@ -203,4 +204,4 @@ if __name__ == '__main__':
     print("   GET  /api/check-auth - Check login status")
     print("   GET  /api/users - View all users")
     print("=" * 50)
-    app.run(debug=True, host=BACKEND_HOST, port=BACKEND_PORT)
+    app.run(debug=FLASK_DEBUG, host=BACKEND_HOST, port=BACKEND_PORT)
